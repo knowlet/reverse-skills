@@ -1,0 +1,14 @@
+interface:
+  display_name: "Reverse Protocol Reconstruction"
+  short_description: "Reconstruct command flow, transport assumptions, message boundaries, and encode/decode behavior."
+  brand_color: "#059669"
+  default_prompt: "Use this skill to reconstruct protocol behavior from strings, handlers, and reverse-engineering evidence."
+
+policy:
+  allow_implicit_invocation: true
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "idaProMCP"
+      description: "IDA Pro MCP server for reading functions, strings, xrefs, and running scripts."
