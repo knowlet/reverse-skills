@@ -1,0 +1,7 @@
+interface:
+  display_name: "Reverse Botnet Dismantling"
+  short_description: "Turn reverse-engineering findings into disruption plans."
+  default_prompt: "Use $reverse-botnet-dismantling to convert malware analysis into ranked disruption, containment, and monitoring options."
+
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Reverse Operator Attribution"
+  short_description: "Pivot from malware artifacts to operator hypotheses."
+  default_prompt: "Use $reverse-operator-attribution to turn malware evidence into prioritized operator pivots and next investigative actions."
+
+policy:
+  allow_implicit_invocation: true

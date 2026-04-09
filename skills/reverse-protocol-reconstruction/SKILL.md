@@ -50,6 +50,10 @@ Summarize:
 - likely network visibility
 - best validation points in PCAP, sandbox, or telemetry
 
+If protocol evidence now supports operator pivots, hand off to `reverse-operator-attribution`.
+
+If the recovered control plane is mature enough for containment or takedown planning, hand off to `reverse-botnet-dismantling`.
+
 ## Output format
 
 # Protocol Reconstruction Summary
