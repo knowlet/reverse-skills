@@ -57,10 +57,11 @@ npx skills add knowlet/reverse-skills --skill reverse-botnet-dismantling
 
 - Separate facts, inferences, and hypotheses.
 - Never claim a tool was executed unless it was actually executed.
+- Prefer concrete command sequences and exact MCP tool names over generic "capability" language.
 - Prefer workflow skills over giant monolithic prompts.
 - Keep core skills agent-agnostic.
 - Put Codex-specific metadata under `codex/overlays/`.
-- Put MCP setup and tool-specific notes under `mcp/`.
+- Keep only verified MCP integrations under `mcp/`.
 
 ## Claude Code and Codex
 
@@ -69,8 +70,10 @@ Core skills live in `skills/<name>/SKILL.md`.
 For Codex-specific metadata and MCP dependency declarations, see:
 - `codex/overlays/<skill>/agents/openai.yaml`
 
-For MCP setup references, see:
-- `mcp/`
+For concrete IDA integration, see:
+- `mcp/ida/README.md`
+
+This repo standardizes on `mrexodia/ida-pro-mcp` for IDA-backed workflows and expects skills to call out actual tool names such as `decompile`, `xrefs_to`, `find_regex`, `export_funcs`, `rename`, and `set_type` when MCP-driven analysis is part of the workflow.
 
 ## Recommended usage order
 

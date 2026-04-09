@@ -7,6 +7,22 @@ description: Use this skill to reconstruct command flow, transport assumptions, 
 
 Use this skill when the analysis already has some strings, handler candidates, or decompiled code and the next goal is to reconstruct the wire protocol or command model.
 
+## Minimum evidence package
+
+Before reconstructing fields, gather at least:
+- command strings, JSON keys, or opcode constants
+- one decode or parse function
+- one dispatch or handler function
+- one encode or send function, if present
+- transport clues from imports, strings, or telemetry
+
+If `ida-pro-mcp` is connected, the minimum MCP pass is:
+- `find_regex` for command words, verbs, framing strings, and JSON tags
+- `xrefs_to` on those strings or constants
+- `decompile` the decode, dispatch, and encode candidates
+- `callgraph` from the receive path or top dispatcher
+- `export_funcs` when local diffing or field extraction is needed
+
 ## Objectives
 
 Produce:
@@ -37,12 +53,20 @@ Try to isolate:
 - encode path
 - send path
 
+Do not infer a full protocol from only one function. Prefer at least one path on each side of dispatch.
+
 ### Phase 3: command and message map
 For each command or message candidate, record:
 - evidence
 - likely direction
 - likely arguments or fields
 - confidence level
+
+Useful CLI pivots:
+
+```bash
+strings -a -n 4 sample.bin | rg -i 'json|msgpack|protobuf|grpc|http|ws|opcode|cmd|type|action|version|nonce|iv'
+```
 
 ### Phase 4: defensive interpretation
 Summarize:

@@ -1,7 +1,7 @@
 interface:
   display_name: "Reverse Golang Symbol Recovery"
-  short_description: "pclntab, buildinfo, GoReSym/redress, and IDA MCP rename workflows."
-  default_prompt: "Use $reverse-golang-symbol-recovery: confirm Go with file/go version -m/binwalk; extract buildinfo; run GoReSym or redress where appropriate; reconcile strings(1) with disassembler strings; use IDA MCP to list main.* and runtime xrefs for renaming; hand off to malware behavior analysis when names stabilize."
+  short_description: "pclntab, buildinfo, GoReSym/redress, and ida-pro-mcp rename workflows."
+  default_prompt: "Use $reverse-golang-symbol-recovery: confirm Go with file/go version -m/binwalk; extract buildinfo; run GoReSym or redress where appropriate; reconcile strings(1) with disassembler strings; when ida-pro-mcp is available use list_funcs, lookup_funcs, decompile, xrefs_to, find_regex, export_funcs, and rename to stabilize user-package names; hand off to malware behavior analysis when names stabilize."
 
 policy:
   allow_implicit_invocation: true

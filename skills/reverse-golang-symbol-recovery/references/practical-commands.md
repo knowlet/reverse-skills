@@ -70,17 +70,30 @@ redress packages sample.bin --std --vendor --filepath
 redress source sample.bin
 ```
 
-## IDA MCP sequence
+## IDA Pro MCP sequence
 
-When an IDA-oriented MCP is connected, tool **names differ by server implementation**. Typical capability families map to actions:
+If `mrexodia/ida-pro-mcp` is connected, prefer these concrete tools:
 
-1. List functions under `main` and any non-stdlib package prefixes the binary exposes.
-2. Decompile `main.main`, `main.init`, and chained init functions.
-3. Retrieve xrefs to `runtime.newobject`, `runtime.newproc`, `runtime.makechan`, and `runtime.selectgo`.
-4. Export pseudocode for the top user packages and suspicious handler functions.
-5. List strings and xrefs that mention config, HTTP, TLS, DNS, shell, or persistence paths.
+1. `list_funcs` for `main` and any recovered package prefixes.
+2. `lookup_funcs` to resolve `main.main`, `main.init`, and large user handlers.
+3. `decompile` for `main.main`, `main.init`, and functions reached from runtime pivots.
+4. `xrefs_to`:
+   - `runtime.newobject`
+   - `runtime.newproc`
+   - `runtime.makechan`
+   - `runtime.selectgo`
+5. `find_regex` for:
+   - `go1\\.` or module paths
+   - `/src/`, `/pkg/mod/`, `github.com/`, `gitlab.com/`
+   - config paths, URLs, shell strings, service names
+6. `export_funcs` for the top user packages and suspicious handler functions.
+7. `rename` and `set_comments` only after the user-code shortlist is stable.
 
-Phrase requests as outcomes (“list xrefs to `runtime.newproc` in non-runtime segments”) rather than assuming a specific JSON-RPC method name.
+Suggested wording:
+- Run `list_funcs` for `main` and show the largest recovered user functions.
+- Run `xrefs_to` on `runtime.newproc` and keep only non-runtime callers.
+- Run `find_regex` for `github.com/|gitlab.com/|/src/|/pkg/mod/` and return xref-bearing hits.
+- Run `export_funcs` for the top five user handlers in JSON.
 
 Do not claim the MCP ran unless it actually ran.
 

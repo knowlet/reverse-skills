@@ -7,6 +7,14 @@ description: Use this skill to transform reverse-engineering notes into a concis
 
 Use this skill when analysis exists but the output is messy, incomplete, or not ready for sharing.
 
+## Minimum source package
+
+Before writing, gather:
+- the current facts / inferences / unknowns split
+- a shortlist of high-signal artifacts or IOCs
+- confidence on the main behavior claims
+- the top next actions or validation gaps
+
 ## Rules
 
 - Prefer compact, high-signal writing.

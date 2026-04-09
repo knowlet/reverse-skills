@@ -7,6 +7,14 @@ description: Use this skill when reverse-engineering, sandbox, or threat-intel e
 
 Use this skill after basic malware analysis exists and the next question is who likely built, operated, funded, or hosted the capability.
 
+## Minimum evidence package
+
+Do not start attribution from a vague family label alone. Gather at least:
+- one build or source-environment leak, or one unique literal / typo
+- one infrastructure, wallet, contract, or update-path pivot
+- one timestamp, version tuple, or deployment-habit clue
+- one competing explanation worth stress-testing
+
 ## Guardrails
 
 - Separate facts, inferences, hypotheses, and unknowns.

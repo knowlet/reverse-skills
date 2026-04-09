@@ -1,6 +1,6 @@
 ---
 name: reverse-golang-symbol-recovery
-description: Use this skill when stripped, packed, or poorly labeled Go binaries need function names, package paths, build metadata, source layout clues, types, or interfaces recovered from build info, pclntab, moduledata, typelinks, or tool-specific metadata before deeper malware analysis. Use when triaging with binwalk/strings/go version -m/GoReSym/redress, when IDA or Ghidra shows too few strings versus strings(1), or when preparing IDA MCP rename and xref workflows for pclntab-anchored recovery.
+description: Use this skill when stripped, packed, or poorly labeled Go binaries need function names, package paths, build metadata, source layout clues, types, or interfaces recovered from build info, pclntab, moduledata, typelinks, or tool-specific metadata before deeper malware analysis. Use when triaging with binwalk/strings/go version -m/GoReSym/redress, when IDA or Ghidra shows too few strings versus strings(1), or when preparing concrete `ida-pro-mcp` rename and xref workflows for pclntab-anchored recovery.
 ---
 
 # Reverse Golang Symbol Recovery
@@ -27,7 +27,7 @@ Prioritize:
 
 If tool selection is unclear, read `references/tool-selection.md`.
 
-If concrete commands are needed, read `references/practical-commands.md`.
+If concrete commands or `ida-pro-mcp` actions are needed, read `references/practical-commands.md`.
 
 For curated blogs, tools (GoReSym, Redress, AlphaGolang), and practitioner links, read `references/external-resources.md`.
 
@@ -81,11 +81,14 @@ redress packages sample.bin --std --vendor --filepath
 redress source sample.bin
 ```
 
-If an IDA-oriented MCP is connected, ask it to:
-- list functions under `main`
-- decompile `main.main` and chained init functions
-- retrieve xrefs to `runtime.newobject`, `runtime.morestack`, and `runtime.newproc`
-- export pseudocode for the top user packages
+If `ida-pro-mcp` is connected, run:
+- `list_funcs` for `main` and recovered user-package prefixes
+- `lookup_funcs` plus `decompile` for `main.main` and chained init functions
+- `xrefs_to` for `runtime.newobject`, `runtime.morestack`, `runtime.newproc`, and `runtime.selectgo`
+- `find_regex` for module paths, source paths, config strings, and URLs
+- `export_funcs` for the top user packages before bulk renaming
+
+Do not use `rename` until build metadata, package ownership, and runtime pivots agree.
 
 ### Phase 3: recover types and interfaces
 
@@ -109,6 +112,12 @@ Produce:
 - a user-code shortlist
 - important functions to inspect first
 - unresolved regions that still need manual work
+
+Minimum artifact bundle:
+- `file`, `sha256sum`, `go version -m`, and BuildID output
+- strings hits for module paths and IOCs
+- GoReSym or Redress inventory
+- `ida-pro-mcp` exports only if the MCP actually ran
 
 If author logic is now visible, hand off to `reverse-golang-malware`.
 

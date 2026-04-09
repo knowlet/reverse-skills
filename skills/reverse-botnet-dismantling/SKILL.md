@@ -7,6 +7,14 @@ description: Use this skill when reverse-engineering, sandbox, or threat-intel w
 
 Use this skill after the protocol, infrastructure, or operator model is clear enough to ask what can actually be disrupted, contained, or monitored.
 
+## Minimum evidence package
+
+Do not propose disruption from IOCs alone. Gather at least:
+- one bootstrap or rejoin mechanism
+- one command-auth or trust model clue
+- one update or recovery path
+- one realistic disruption route with explicit prerequisites
+
 ## Guardrails
 
 - Separate facts, inferences, hypotheses, and unknowns.
