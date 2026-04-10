@@ -62,6 +62,18 @@ Use this order unless a skill says otherwise:
 6. `rename`, `set_comments`, and `set_type` only after evidence is sufficient.
 7. `export_funcs` when a local helper script or external review needs stable text.
 
+For a cost-budgeted, reproducible first pass ("survey this binary"),
+use **`reverse-ida-mcp-driver`**. It ships:
+
+- Ready-to-paste survey prompts (cold-start, Rust-biased, Go-biased,
+  dispatcher, handler, and type-recovery variants) in
+  `skills/reverse-ida-mcp-driver/references/survey-prompts.md`.
+- Batched `find_regex` alternation bundles in
+  `skills/reverse-ida-mcp-driver/references/regex-bundles.md`.
+- `py_eval`-ready scripts for capabilities IDA does not have by
+  default: `.rodata` byte scanner, panic-path extraction, and pclntab
+  discovery. See `skills/reverse-ida-mcp-driver/scripts/`.
+
 ## Go-focused sequence
 
 For stripped Go samples:

@@ -42,10 +42,11 @@ Start with the fastest local checks:
 ```bash
 file sample.bin
 sha256sum sample.bin
-binwalk -Me sample.bin
+binwalk sample.bin                         # signature scan; add -Me to extract
 go version -m sample.bin
 go tool buildid sample.bin
 python3 scripts/extract_buildinfo.py sample.bin
+python3 scripts/pclntab_finder.py sample.bin   # locate pclntab even when stripped
 ```
 
 Look for:
@@ -54,14 +55,28 @@ Look for:
 - Go build info or BuildID
 - package paths embedded in the binary
 
+`pclntab_finder.py` finds the pclntab magic header (`0xfffffffb` for Go
+1.2, `0xfffffffa` for 1.16, `0xfffffff0` for 1.18, `0xfffffff1` for 1.20)
+even when the `.symtab` and section names are stripped. It reports
+offset, endian, pc quantum, and pointer size — exactly what you need to
+manually define a `.gopclntab` segment in IDA and undo the stripping.
+There is a `py_eval`-ready wrapper in
+`../reverse-ida-mcp-driver/scripts/ida_pclntab_finder.py` for running it
+inside IDA directly.
+
 Prefer the most direct version source available. If version recovery is weak, record a range instead of guessing an exact version.
 
 ### Phase 2: recover names and package boundaries
 
 Prefer this order:
 1. native disassembler Go support if it already produced usable names
-2. Go-aware metadata parsers
+2. Go-aware metadata parsers (GoReSym, Redress)
 3. version-aware scripts that rename from pclntab
+4. **CFG-similarity matching (GoResolver)** when steps 1-3 recover very
+   few names — that usually means the sample was obfuscated with Garble
+   and metadata-based tools have nothing to chew on. See
+   `references/external-resources.md` for the GoResolver entry and
+   pointer to the Volexity writeup.
 
 Recover:
 - `main.main`

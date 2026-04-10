@@ -1,0 +1,14 @@
+interface:
+  display_name: "Reverse IDA MCP Driver"
+  short_description: "Drive ida-pro-mcp efficiently: structured survey, dispatcher location, handler fan-out, and py_eval helpers."
+  brand_color: "#7C3AED"
+  default_prompt: "Use $reverse-ida-mcp-driver: open with a structured 'survey this binary' pass using ida://idb/metadata, list_funcs, find_regex, and py_eval from scripts/ida_rodata_scanner.py; keep ≤2 decompile calls in phase 1; locate the dispatcher via xrefs_to command strings and cyclomatic complexity; map handler fan-out before renaming; separate facts, inferences, hypotheses; never claim an MCP tool ran unless it actually ran."
+
+policy:
+  allow_implicit_invocation: true
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "idaProMCP"
+      description: "mrexodia/ida-pro-mcp for list_funcs, decompile, xrefs_to, find_regex, py_eval, and set_* operations."
