@@ -110,3 +110,29 @@ This repo standardizes on `mrexodia/ida-pro-mcp` for IDA-backed workflows and ex
 6. `reverse-operator-attribution`
 7. `reverse-botnet-dismantling`
 8. `reverse-reporting`
+
+## Contributing
+
+Follow [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+<type>[optional scope]: <short description>
+
+[optional body]
+```
+
+Common types for this repo:
+
+| type | when |
+|------|------|
+| `feat` | new skill, new script, new reference |
+| `fix` | bug in a script or incorrect workflow guidance |
+| `refactor` | restructure without adding new functionality |
+| `docs` | README, reference files, or comment-only changes |
+| `chore` | .gitignore, tooling, packaging |
+
+Scope is the skill name when the change is scoped to one skill (e.g.
+`feat(reverse-rust-malware): add rodata scanner`). Omit scope for
+cross-cutting changes.
+
+Keep commit messages in the imperative mood: "add X", not "added X".
